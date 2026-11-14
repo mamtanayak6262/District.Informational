@@ -1,4 +1,6 @@
  
+ 
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,57 +131,110 @@ nav ul li.active a {
     cursor: pointer;
 }
 
-/* HERO BACKGROUND IMAGE */
+/* HERO IMAGE SLIDER */
 .hero {
     position: relative;
-    height: 500px;
     width: 100%;
+    height: 500px;
     overflow: hidden;
-
-    background-image:
-        linear-gradient(
-            rgba(0,0,0,0.15),
-            rgba(0,0,0,0.15)
-        ),
-        url("Images/17676136399307.jpg");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: #222;
 }
 
-/* HERO TITLE */
-.hero-content {
+.slider-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.slide:hover img {
+    transform: scale(1.06);
+}
+
+/* IMAGE DARK OVERLAY */
+.slide::after {
+    content: "";
     position: absolute;
-    bottom: 0;
-    left: 12%;
-    right: 12%;
-
-    background: rgba(0,0,0,0.65);
-    color: white;
-
-    padding: 22px 20px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    inset: 0;
+    background: rgba(0,0,0,0.18);
 }
 
-.hero-content h1 {
-    font-size: 28px;
+/* THIRD IMAGE TITLE */
+.third-slide .hero-title {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
     color: white;
+    font-size: 30px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.65);
+    padding: 22px 12px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 5px black;
+}
+
+/* SLIDER BUTTONS */
+.slider-buttons {
+    position: absolute;
+    z-index: 5;
+    bottom: 20px;
+    right: 30px;
 }
 
 .slider-buttons button {
-    padding: 12px 17px;
+    width: 45px;
+    height: 45px;
     border: none;
     background: white;
     cursor: pointer;
-    font-size: 20px;
-    margin: 2px;
+    font-size: 22px;
+    margin: 3px;
+    border-radius: 4px;
 }
 
 .slider-buttons button:hover {
+    background: #e6aa22;
+}
+
+/* SLIDER INDICATORS */
+.slider-dots {
+    position: absolute;
+    z-index: 5;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dot.active {
     background: #e6aa22;
 }
 
@@ -360,6 +415,7 @@ footer a:hover { color: #eab12c; }
     color: white;
     font-size: 23px;
     cursor: pointer;
+    z-index: 10;
 }
 
 /* RESPONSIVE */
@@ -374,6 +430,9 @@ footer a:hover { color: #eab12c; }
     .tourism-cards { grid-template-columns: 1fr 1fr; }
     .about { flex-direction: column; }
     .search-box { width: 100%; }
+
+    .hero { height: 400px; }
+    .third-slide .hero-title { font-size: 23px; }
 }
 
 @media(max-width:600px) {
@@ -407,18 +466,45 @@ footer a:hover { color: #eab12c; }
 
     nav ul li a { border-bottom: 1px solid #eee; }
 
+    /* THREE IMAGES VISIBLE ON MOBILE */
     .hero {
         height: 300px;
-        background-position: center;
     }
 
-    .hero-content {
-        left: 0;
-        right: 0;
-        padding: 12px;
+    .slider-container {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .hero-content h1 { font-size: 19px; }
+    .slide img {
+        object-position: center;
+    }
+
+    .third-slide .hero-title {
+        font-size: 14px;
+        padding: 12px 5px;
+        width: 96%;
+    }
+
+    .slider-buttons {
+        bottom: 8px;
+        right: 5px;
+    }
+
+    .slider-buttons button {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+
+    .slider-dots {
+        bottom: 18px;
+        left: 35%;
+    }
+
+    .dot {
+        width: 9px;
+        height: 9px;
+    }
 
     .news {
         margin: 20px 10px;
@@ -491,18 +577,51 @@ footer a:hover { color: #eab12c; }
     </ul>
 </nav>
 
-<!-- HERO SECTION WITH BACKGROUND IMAGE -->
+<!-- HERO: THREE IMAGES VISIBLE TOGETHER -->
 <section class="hero">
 
-    <div class="hero-content">
+    <div class="slider-container" id="sliderContainer">
 
-        <h1>कलेक्ट्रेट शहडोल</h1>
-
-        <div class="slider-buttons">
-            <button onclick="goToTop()">❮</button>
-            <button onclick="goToTop()">❯</button>
+        <!-- FIRST IMAGE -->
+        <div class="slide">
+            <img id="imageOne"
+            src="https://images.unsplash.com/photo-1511497584788-876760111969"
+            alt="Shahdol Natural Forest">
         </div>
 
+        <!-- SECOND IMAGE -->
+        <div class="slide">
+            <img id="imageTwo"
+            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+            alt="Shahdol Nature and Tourism">
+        </div>
+
+        <!-- THIRD IMAGE: YOUR COLLECTOR OFFICE IMAGE -->
+        <div class="slide third-slide">
+
+            <img
+            src="images/17676136399307.jpg"
+            alt="Collector Office Shahdol">
+
+            <h1 class="hero-title">
+                कलेक्ट्रेट शहडोल
+            </h1>
+
+        </div>
+
+    </div>
+
+    <!-- SLIDER BUTTONS -->
+    <div class="slider-buttons">
+        <button onclick="previousSlide()">❮</button>
+        <button onclick="nextSlide()">❯</button>
+    </div>
+
+    <!-- INDICATORS -->
+    <div class="slider-dots">
+        <button class="dot active" onclick="setSlide(0)"></button>
+        <button class="dot" onclick="setSlide(1)"></button>
+        <button class="dot" onclick="setSlide(2)"></button>
     </div>
 
 </section>
@@ -549,7 +668,7 @@ footer a:hover { color: #eab12c; }
 <section class="about">
 
     <div class="about-image">
-        <img src="Images/17676136399307.jpg"
+        <img src="images/17676136399307.jpg"
         alt="Shahdol Collector Office">
     </div>
 
@@ -650,10 +769,72 @@ function toggleMenu() {
     document.getElementById("navMenu").classList.toggle("show");
 }
 
+// THREE IMAGE SLIDER
+// Teeno images ek saath visible rahengi.
+// Buttons se images ka order change hoga.
+
+const imageSlides = [
+    {
+        first: "https://images.unsplash.com/photo-1511497584788-876760111969",
+        second: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+        title: "Natural Beauty of Shahdol"
+    },
+    {
+        first: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+        second: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23",
+        title: "Tourism and Heritage"
+    },
+    {
+        first: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23",
+        second: "https://images.unsplash.com/photo-1511497584788-876760111969",
+        title: "Explore District Shahdol"
+    }
+];
+
+let currentSlide = 0;
+
+function showSlide() {
+
+    document.getElementById("imageOne").src =
+        imageSlides[currentSlide].first;
+
+    document.getElementById("imageTwo").src =
+        imageSlides[currentSlide].second;
+
+    document.querySelector(".hero-title").innerText =
+        currentSlide === 0
+        ? "कलेक्ट्रेट शहडोल"
+        : imageSlides[currentSlide].title;
+
+    document.querySelectorAll(".dot").forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
+    });
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % imageSlides.length;
+    showSlide();
+}
+
+function previousSlide() {
+    currentSlide =
+        (currentSlide - 1 + imageSlides.length) % imageSlides.length;
+    showSlide();
+}
+
+function setSlide(index) {
+    currentSlide = index;
+    showSlide();
+}
+
+// AUTOMATIC SLIDER
+let sliderTimer = setInterval(nextSlide, 5000);
+
 // SEARCH
 function searchWebsite() {
+
     let value = document.getElementById("searchInput")
-    .value.toLowerCase().trim();
+        .value.toLowerCase().trim();
 
     if (value === "") {
         alert("Please enter something to search!");
@@ -667,10 +848,12 @@ function searchWebsite() {
     let found = false;
 
     sections.forEach(function(section) {
+
         if (section.innerText.toLowerCase().includes(value)) {
             section.scrollIntoView({ behavior: "smooth" });
             found = true;
         }
+
     });
 
     if (!found) {
