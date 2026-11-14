@@ -129,31 +129,37 @@ nav ul li.active a {
     cursor: pointer;
 }
 
-/* HERO SLIDER */
+/* HERO BACKGROUND IMAGE */
 .hero {
     position: relative;
     height: 500px;
-    overflow: hidden;
-    background: #333;
-}
-
-.hero img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    transition: opacity 0.4s;
+    overflow: hidden;
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,0.15),
+            rgba(0,0,0,0.15)
+        ),
+        url("Images/17676136399307.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* HERO TITLE */
 .hero-content {
     position: absolute;
     bottom: 0;
     left: 12%;
     right: 12%;
+
     background: rgba(0,0,0,0.65);
     color: white;
-    padding: 20px;
+
+    padding: 22px 20px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -161,6 +167,7 @@ nav ul li.active a {
 
 .hero-content h1 {
     font-size: 28px;
+    color: white;
 }
 
 .slider-buttons button {
@@ -247,7 +254,9 @@ nav ul li.active a {
     gap: 35px;
 }
 
-.about-image, .about-content { flex: 1; }
+.about-image, .about-content {
+    flex: 1;
+}
 
 .about-image img {
     width: 100%;
@@ -398,7 +407,10 @@ footer a:hover { color: #eab12c; }
 
     nav ul li a { border-bottom: 1px solid #eee; }
 
-    .hero { height: 300px; }
+    .hero {
+        height: 300px;
+        background-position: center;
+    }
 
     .hero-content {
         left: 0;
@@ -479,34 +491,32 @@ footer a:hover { color: #eab12c; }
     </ul>
 </nav>
 
-<!-- HERO SLIDER -->
+<!-- HERO SECTION WITH BACKGROUND IMAGE -->
 <section class="hero">
 
-    <!-- YOUR LOCAL IMAGE -->
-    <img id="heroImage"
-    src="images/17676136399307.jpg"
-    alt="Collector Office Shahdol">
-
     <div class="hero-content">
-        <h1 id="heroTitle">कलेक्ट्रेट शहडोल</h1>
+
+        <h1>कलेक्ट्रेट शहडोल</h1>
 
         <div class="slider-buttons">
-            <button onclick="previousSlide()">❮</button>
-            <button onclick="nextSlide()">❯</button>
+            <button onclick="goToTop()">❮</button>
+            <button onclick="goToTop()">❯</button>
         </div>
+
     </div>
+
 </section>
 
 <!-- LATEST NEWS -->
 <section class="news">
     <div class="news-title">Latest News</div>
-    <div class="news-text" id="newsText">
+    <div class="news-text">
         Welcome to District Shahdol Website.
     </div>
 </section>
 
 <!-- QUICK LINKS -->
-<section class="quick-links" id="directory">
+<section class="quick-links">
 
     <a href="departments.html" class="quick-card">
         <div class="icon">🏢</div>
@@ -536,10 +546,10 @@ footer a:hover { color: #eab12c; }
 </section>
 
 <!-- ABOUT SHAHdol -->
-<section class="about" id="about">
+<section class="about">
 
     <div class="about-image">
-        <img src="images/17676136399307.jpg"
+        <img src="Images/17676136399307.jpg"
         alt="Shahdol Collector Office">
     </div>
 
@@ -562,7 +572,7 @@ footer a:hover { color: #eab12c; }
 </section>
 
 <!-- TOURISM -->
-<section class="tourism" id="tourism">
+<section class="tourism">
     <h2>Explore Shahdol</h2>
 
     <div class="tourism-cards">
@@ -589,7 +599,7 @@ footer a:hover { color: #eab12c; }
 </section>
 
 <!-- FOOTER -->
-<footer id="contact">
+<footer>
 
     <div class="footer-content">
 
@@ -602,7 +612,7 @@ footer a:hover { color: #eab12c; }
             </p>
         </div>
 
-        <div id="departments">
+        <div>
             <h3>Important Links</h3>
             <p>
                 <a href="about.html">About District</a><br>
@@ -639,45 +649,6 @@ footer a:hover { color: #eab12c; }
 function toggleMenu() {
     document.getElementById("navMenu").classList.toggle("show");
 }
-
-// IMAGE SLIDER
-let slides = [
-    {
-        title: "कलेक्ट्रेट शहडोल",
-        image: "images/17676136399307.jpg"
-    },
-    {
-        title: "Explore the Natural Beauty of Shahdol",
-        image: "https://images.unsplash.com/photo-1511497584788-876760111969"
-    },
-    {
-        title: "Discover Culture and Heritage",
-        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-    }
-];
-
-let currentSlide = 0;
-
-function showSlide() {
-    document.getElementById("heroTitle").innerText =
-    slides[currentSlide].title;
-
-    document.getElementById("heroImage").src =
-    slides[currentSlide].image;
-}
-
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide();
-}
-
-function previousSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide();
-}
-
-// AUTOMATIC SLIDER
-setInterval(nextSlide, 5000);
 
 // SEARCH
 function searchWebsite() {
